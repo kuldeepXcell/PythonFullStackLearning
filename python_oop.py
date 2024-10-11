@@ -305,13 +305,13 @@
 #         self._s = s
 #
 #     def __eq__(self, other):
-#         if self._h == other._h and self._m == other._m and self._s == other._s:
+#         if _cmp(self,other) == 0:
 #             return True
 #         else:
 #             return False
 #
 #     def __lt__(self, other):
-#         if self._h < other._h:
+#         if self._h < other._h:               # return True if _cmp(self,other) == 1 else False
 #             return True
 #         if self._h == other._h:
 #             if self._m < other._m:
@@ -327,7 +327,7 @@
 #             return False
 #
 #     def __gt__(self, other):
-#         if self._h > other._h:
+#         if self._h > other._h:                  # return True if _cmp(self,other) == -1 else False
 #             return True
 #         if self._h == other._h:
 #             if self._m > other._m:
@@ -357,17 +357,17 @@
 #
 # def _cmp(time1, time2):
 #     if time1._h < time2._h:
-#         return True
+#         return 1
 #     if time1._h > time2._h:
-#         return False
+#         return -1
 #     if time1._m < time2._m:
-#         return True
+#         return 1
 #     if time1._m > time2._m:
-#         return False
+#         return -1
 #     if time1._s < time2._s:
-#         return True
+#         return 1
 #     if time1._s > time2._s:
-#         return False
+#         return -1
 #     return 0
 #
 #
@@ -380,56 +380,301 @@
 # print(t1 > t2)
 # print(t1 == t2)
 # print(t2 == t3)
+#
+# #######################################################################################################################
+#
+# class Length:
+#     def __init__(self, feet, inches):
+#         self.feet = feet
+#         self.inches = inches
+#
+#     def __str__(self):
+#         return f'{self.feet} {self.inches}'
+#
+#     def __add__(self, other):
+#         if type(other) is int:
+#             return f"{self.feet+other}' {self.inches}''"
+#         else:
+#             updated_feet = self.feet + other.feet
+#             updated_inches = self.inches + other.inches
+#             extra_feet = updated_inches//12
+#             if extra_feet > 0:
+#                 updated_feet  += extra_feet
+#                 updated_inches -= 12*extra_feet
+#             return f"{updated_feet}' {updated_inches}''"
+#
+#     def __radd__(self, other):
+#         return self.__add__(other)
+#
+#     def add_length(self, L):
+#         f = self.feet + L.feet
+#         i = self.inches + L.inches
+#         if i >= 12:
+#             i = i - 12
+#         f += 1
+#         return Length(f, i)
+#
+#     def add_inches(self, inches):
+#         f = self.feet + inches // 12
+#         i = self.inches + inches % 12
+#         if i >= 12:
+#             i = i - 12
+#         f += 1
+#         return Length(f, i)
+#
+#
+# length1 = Length(2, 10)
+# length2 = Length(3, 5)
+#
+# print(length1 + length2)
+# print(length1 + 2)
+# print(length1 + 20)
+# print(20 + length1)
 
 #######################################################################################################################
 
-class Length:
-    def __init__(self, feet, inches):
-        self.feet = feet
-        self.inches = inches
+# class Course:
+#     def __init__(self,title,instructor, price, lectures, users, ratings, avg_rating):
+#         self.title = title
+#         self.instructor = instructor
+#         self.price = price
+#         self.lectures = lectures
+#         self.users = users
+#         self.ratings = ratings
+#         self.avg_rating = avg_rating
+#
+#     def __str__(self):
+#         return f"title: {self.title}\
+#                 instructor: {self.instructor}\
+#                 price: {self.price}"
+#
+#     def new_user_enrolled(self,name):
+#         self.users.append(name)
+#
+#     def received_a_rating(self):
+#         self.ratings += 1
+#
+#     def show_details(self):
+#         print(f"title: {self.title}\
+#                 instructor: {self.instructor}\
+#                 price: {self.price}")
+#
+#
+# class VideoCourse(Course):
+#     def __init__(self,title,instructor, price, lectures, users, ratings, avg_rating, video_length = 50):
+#         super().__init__(title,instructor, price, lectures, users, ratings, avg_rating)
+#         self.video_length = video_length
+#
+#     def __str__(self):
+#         return f"title: {self.title}\
+#                 instructor: {self.instructor}\
+#                 price: {self.price}\
+#                 Video Length: {self.video_length}"
+#
+#
+# class PdfCourse(Course):
+#     def __init__(self,title,instructor, price, lectures, users, ratings, avg_rating, pages = 550):
+#         super().__init__(title,instructor, price, lectures, users, ratings, avg_rating)
+#         self.pages = pages
+#
+#     def __str__(self):
+#         return f"title: {self.title}\
+#                 instructor: {self.instructor}\
+#                 price: {self.price}\
+#                 Pages: {self.pages}"
+#
+#
+# c1 = Course("DARK","Kuldeep Modh1",1500, 10, ["kdm","drm","kdm"], 10532, 5)
+# c2 = VideoCourse("DARK2","Kuldeep Modh2",1000, 20, ["kdm","drm","kdm"], 10400, 4.9,59)
+# c3 = PdfCourse("DARK3","Kuldeep Modh3",1000, 30, ["kdm","drm","kdm"], 10532, 5,420)
+#
+# print(c1)
+# print(c2)
+# print(c3)
+#
+# ######################################################################################################################
+#
+# class Mother:
+#     def cook(self):
+#         print('Can cook pasta')
+#
+#
+# class Father:
+#     def cook(self):
+#         print('Can cook noodles')
+#
+#
+# class Daughter(Father, Mother):
+#     pass
+#
+#
+# class Son(Mother, Father):
+#     def cook(self):
+#         super().cook()
+#         print('Can cook butter chicken')
+#
+#
+# d = Daughter()
+# s = Son()
+#
+# d.cook()
+# print()
+# s.cook()
 
-    def __str__(self):
-        return f'{self.feet} {self.inches}'
+######################################################################################################################
 
-    def __add__(self, other):
-        if type(other) is int:
-            return f"{self.feet+other}' {self.inches}''"
-        else:
-            updated_feet = self.feet + other.feet
-            updated_inches = self.inches + other.inches
-            extra_feet = updated_inches//12
-            if extra_feet > 0:
-                updated_feet  += extra_feet
-                updated_inches -= 12*extra_feet
-            return f"{updated_feet}' {updated_inches}''"
-
-    def __radd__(self, other):
-        return self.__add__(other)
-
-    def add_length(self, L):
-        f = self.feet + L.feet
-        i = self.inches + L.inches
-        if i >= 12:
-            i = i - 12
-        f += 1
-        return Length(f, i)
-
-    def add_inches(self, inches):
-        f = self.feet + inches // 12
-        i = self.inches + inches % 12
-        if i >= 12:
-            i = i - 12
-        f += 1
-        return Length(f, i)
-
-
-length1 = Length(2, 10)
-length2 = Length(3, 5)
-
-print(length1 + length2)
-print(length1 + 2)
-print(length1 + 20)
-print(20 + length1)
+# class Person:
+#     def greet(self):
+#         print('I am a Person')
+#
+#
+# class Teacher(Person):
+#     def greet(self):
+#         super().greet()
+#         print('I am a Teacher')
+#
+#
+# class Student(Person):
+#     def greet(self):
+#         super().greet()
+#         print('I am a Student')
+#
+#
+# class TeachingAssistant(Teacher, Student):
+#     def greet(self):
+#         super().greet()
+#         print('I am a Teaching Assistant')
+#
+# x = TeachingAssistant()
+# x.greet()
+#
+# print(help(x))
 
 #######################################################################################################################
 
+# class Sample:
+#     def add(self,a,b):
+#         return a+b
+#
+#     def add(self,a,b,c,d):
+#         return a+b+c+d
+#
+#     def add(self,a,b,c,d,e):
+#         return a+b+c+d+e
+#
+# c = Sample()
+# print(c.add(5,3))
+
+#######################################################################################################################
+
+# class Person:
+#     def __init__(self, id):
+#         self.id = id
+#
+#
+# class Teacher(Person):
+#     def __init__(self, id):
+#         Person.__init__(self, id)
+#         self.id += 'T'
+#
+#
+# class Student(Person):
+#     def __init__(self, id):
+#         Person.__init__(self, id)
+#         self.id += 'S'
+#
+#
+# class TeachingAssistant(Student, Teacher):
+#     def __init__(self, id):
+#         Student.__init__(self, id)
+#         Teacher.__init__(self, id)
+#
+#
+# x = TeachingAssistant('2675')
+# print(x.id)
+# y = Student('4567')
+# print(y.id)
+# z = Teacher('3421')
+# print(z.id)
+# p = Person('5749')
+# print(p.id)
+
+
+#######################################################################################################################
+
+# class Person:
+#     def __init__(self, id):
+#         self.id = id
+#
+#
+# class Teacher(Person):
+#     def __init__(self, id):
+#         super().__init__(id)
+#         self.id += 'T'
+#
+#
+# class Student(Person):
+#     def __init__(self, id):
+#         super().__init__(id)
+#         self.id += 'S'
+#
+#
+# class TeachingAssistant(Student, Teacher):
+#     def __init__(self, id):
+#         super().__init__(id)
+#
+#
+# x = TeachingAssistant('2675')
+# print(x.id)
+# y = Student('4567')
+# print(y.id)
+# z = Teacher('3421')
+# print(z.id)
+# p = Person('5749')
+# print(p.id)
+#
+# print(help(x))
+
+#######################################################################################################################
+
+# from multiprocessing import Process
+# import os
+#
+# def info(title):
+#     print(title)
+#     print('module name:', __name__)
+#     print('parent process:', os.getppid())
+#     print('process id:', os.getpid())
+#
+# def f(name):
+#     info('function f')
+#     print('hello', name)
+#
+# if __name__ == '__main__':
+#     info('main line')
+#     p = Process(target=f, args=('bob',))
+#     p.start()
+#     p.join()
+
+
+import concurrent.futures
+import time
+
+start = time.perf_counter()
+l1 = list(range(1,100))
+
+def compute_factorial(num):
+    print(f"{num} Processing!")
+    if num == 0 or num == 1:
+        return 1
+    else:
+        return num * compute_factorial(num - 1)
+
+
+with concurrent.futures.ProcessPoolExecutor() as executor:
+    results = executor.map(compute_factorial,l1)
+
+results = list(results)
+print(results)
+finish = time.perf_counter()
+print(f"Time Taken : {finish-start}")
