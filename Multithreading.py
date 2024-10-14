@@ -55,7 +55,7 @@ def study():
     time.sleep(5)
     print("You finish studying")
 
-
+start = time.perf_counter()
 x = threading.Thread(target=eat_breakfast, args=())
 x.start()
 
@@ -69,8 +69,9 @@ x.join()
 y.join()
 z.join()
 
+finish = time.perf_counter()
 print(threading.active_count())
 print(threading.enumerate())
-print(time.perf_counter())
+print(f"Execution Time : {finish-start :.3f} S")
 
 # ****************************************************
