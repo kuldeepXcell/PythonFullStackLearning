@@ -1,0 +1,90 @@
+Basics of Django ModelFields : 
+
+Text Fields
+	> CharField – A short text field (e.g., name, title). Requires a max_length argument.
+		> name = models.CharField(max_length=100)
+	> TextField – A large text field (e.g., description). No max_length is required.
+		> description = models.TextField()
+		
+Numeric Fields
+	> IntegerField – Integer value (e.g., age, count).
+		> age = models.IntegerField()
+	> PositiveIntegerField – Integer value, must be positive.
+		> quantity = models.PositiveIntegerField()
+	> PositiveSmallIntegerField – Small integer, must be positive.
+		> rank = models.PositiveSmallIntegerField()
+	> SmallIntegerField – Small integer value (typically between -32,768 to 32,767).
+		> score = models.SmallIntegerField()
+	> BigIntegerField – Big integer value (for larger ranges than IntegerField).
+		> revenue = models.BigIntegerField()
+	> DecimalField – A fixed-point decimal value, typically used for money or precise calculations. Requires max_digits and decimal_places.
+		> price = models.DecimalField(max_digits=10, decimal_places=2)
+	> FloatField – A floating point number (e.g., ratings, scientific values).
+		> rating = models.FloatField()
+		
+Boolean Fields
+	> BooleanField – A True/False field.
+		> is_active = models.BooleanField()
+	> NullBooleanField (deprecated) – A Boolean field that can also be null.
+		> is_verified = models.NullBooleanField()
+		
+Date/Time Fields
+	> DateField – A date value (without time).
+		> birth_date = models.DateField()
+	> TimeField – A time value (without date).
+		> start_time = models.TimeField()
+	> DateTimeField – A date and time value.
+		> created_at = models.DateTimeField(auto_now_add=True)
+	> DurationField – A field for storing time durations (e.g., the difference between two dates).
+		> duration = models.DurationField()
+		
+File Fields
+	> FileField – A file upload field.
+		> resume = models.FileField(upload_to='uploads/')
+	> ImageField – A specialized FileField for image files, typically requires Pillow library.
+		> profile_picture = models.ImageField(upload_to='profile_pics/')
+		
+Relationships Fields
+	> ForeignKey – A many-to-one relationship (e.g., a book is written by one author).
+		> author = models.ForeignKey(Author, on_delete=models.CASCADE)
+	> OneToOneField – A one-to-one relationship (e.g., each user has one profile).
+		> profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+	> ManyToManyField – A many-to-many relationship (e.g., students enrolled in many courses).
+		> courses = models.ManyToManyField(Course)
+		
+Other Fields
+	> SlugField – A short label, typically used for URL slugs (e.g., a URL-friendly version of a title).
+		> slug = models.SlugField(unique=True)
+	> UUIDField – A universally unique identifier (UUID) field.
+		> id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+		
+Special Fields
+	> JSONField – A field for storing JSON-encoded data. (Requires Django 3.1 or later)
+		> metadata = models.JSONField()
+	> ArrayField (PostgreSQL only) – A field to store an array of values.
+		> tags = models.ArrayField(models.CharField(max_length=100), blank=True)
+		
+Custom Fields
+	> GenericIPAddressField – A field for storing an IP address (either IPv4 or IPv6).
+		> ip_address = models.GenericIPAddressField()
+		
+Miscellaneous Fields
+	> FilePathField – A path to a file on the filesystem, typically used to point to directories or files.
+		> file_path = models.FilePathField(path='/var/www')
+	> URLField – A URL field (e.g., website URL).
+		> website = models.URLField()
+		
+Advanced Fields
+	> CommaSeparatedIntegerField – Deprecated as of Django 1.9, but still usable. A field for storing a list of integers separated by commas.
+		> numbers = models.CommaSeparatedIntegerField(max_length=100)
+		
+Meta-Options : Additionally, each ModelField can have several common options for customization:
+
+	default – The default value for the field.
+	null – Whether the field is allowed to be NULL in the database.
+	blank – Whether the field is allowed to be empty in forms.
+	choices – A list of possible values for the field.
+	verbose_name – A human-readable name for the field.
+	help_text – A text that explains the purpose of the field
+
+
